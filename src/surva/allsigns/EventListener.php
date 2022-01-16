@@ -72,7 +72,7 @@ class EventListener implements Listener
 
         $mode = $item->getId() === ItemIds::GOLD_PICKAXE ? AllSignsGeneral::EDIT_MODE : AllSignsGeneral::INTERACT_MODE;
 
-        if ($mode === AllSignsGeneral::EDIT_MODE) {
+        if ($mode === AllSignsGeneral::EDIT_MODE && !$pl->isCreative()) {
             if (!$pl->hasPermission("allsigns.create")) {
                 $pl->sendMessage($this->allSigns->getMessage("form.nopermission"));
 

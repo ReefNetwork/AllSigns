@@ -10,7 +10,7 @@ website: https://plugins.surva.net/#allsigns
 permissions:
   allsigns.create:
     description: "Create signs using AllSigns"
-    default: op
+    default: true
   allsigns.use:
     description: "Use signs created by AllSigns"
     default: true

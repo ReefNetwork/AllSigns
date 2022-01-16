@@ -43,16 +43,6 @@ class CommandSignForm implements Form
             "default" => $existingData !== null ? $existingData["settings"]["command"] : "",
           ],
           [
-            "type"    => "dropdown",
-            "text"    => $allSigns->getMessage("form.commandsign.context"),
-            "options" => [
-              $allSigns->getMessage("form.commandsign.player"),
-              $allSigns->getMessage("form.commandsign.server"),
-            ],
-            "default" => $existingData !== null ? $existingData["settings"]["context"]
-              : ExecutionContext::CONTEXT_PLAYER,
-          ],
-          [
             "type"    => "input",
             "text"    => $allSigns->getMessage("form.commandsign.text"),
             "default" => $existingData !== null ? $existingData["settings"]["text"] : "",
@@ -77,17 +67,17 @@ class CommandSignForm implements Form
             return;
         }
 
-        if (count($data) !== 4) {
+        if (count($data) !== 3) {
             return;
         }
 
         $signData = [
           "command" => $data[0],
-          "context" => $data[1],
+          "context" => ExecutionContext::CONTEXT_PLAYER,
         ];
 
-        $text       = $data[2];
-        $permission = $data[3];
+        $text       = $data[1];
+        $permission = "";
 
         if ($this->sign->createSign($signData, $text, $permission)) {
             $player->sendMessage($this->allSigns->getMessage("form.commandsign.success"));

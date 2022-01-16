@@ -44,11 +44,6 @@ class TeleportSignForm implements Form
         $this->content = [
           [
             "type"    => "input",
-            "text"    => $allSigns->getMessage("form.teleportsign.world"),
-            "default" => $existingData !== null ? $existingData["settings"]["world"] : $defaultWorld,
-          ],
-          [
-            "type"    => "input",
             "text"    => $allSigns->getMessage("form.teleportsign.xc"),
             "default" => $existingData !== null ? $existingData["settings"]["xc"] : "",
           ],
@@ -67,11 +62,6 @@ class TeleportSignForm implements Form
             "text"    => $allSigns->getMessage("form.commandsign.text"),
             "default" => $existingData !== null ? $existingData["settings"]["text"] : "",
           ],
-          [
-            "type"    => "input",
-            "text"    => $allSigns->getMessage("form.commandsign.permission"),
-            "default" => $existingData !== null ? $existingData["settings"]["permission"] : "",
-          ],
         ];
     }
 
@@ -87,19 +77,19 @@ class TeleportSignForm implements Form
             return;
         }
 
-        if (count($data) !== 6) {
+        if (count($data) !== 4) {
             return;
         }
 
         $signData = [
-          "world" => $data[0],
-          "xc"    => $data[1],
-          "yc"    => $data[2],
-          "zc"    => $data[3],
+          "world" => $player->getWorld()->getFolderName(),
+          "xc"    => $data[0],
+          "yc"    => $data[1],
+          "zc"    => $data[2],
         ];
 
-        $text       = $data[4];
-        $permission = $data[5];
+        $text       = $data[3];
+        $permission = "";
 
         if ($this->sign->createSign($signData, $text, $permission)) {
             $player->sendMessage($this->allSigns->getMessage("form.teleportsign.success"));
