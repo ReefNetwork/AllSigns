@@ -47,11 +47,6 @@ class CommandSignForm implements Form
             "text"    => $allSigns->getMessage("form.commandsign.text"),
             "default" => $existingData !== null ? $existingData["settings"]["text"] : "",
           ],
-          [
-            "type"    => "input",
-            "text"    => $allSigns->getMessage("form.commandsign.permission"),
-            "default" => $existingData !== null ? $existingData["settings"]["permission"] : "",
-          ],
         ];
     }
 
@@ -67,7 +62,7 @@ class CommandSignForm implements Form
             return;
         }
 
-        if (count($data) !== 3) {
+        if (count($data) !== 2) {
             return;
         }
 
