@@ -2,7 +2,8 @@
   "name": "survanetwork/allsigns",
   "description": "PocketMine-MP plugin",
   "require": {
-    "pocketmine/pocketmine-mp": "4.0.*"
+    "pocketmine/pocketmine-mp": "4.0.*",
+    "ext-mbstring": "*"
   },
   "repositories": [
     {

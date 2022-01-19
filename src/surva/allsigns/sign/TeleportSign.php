@@ -41,6 +41,11 @@ class TeleportSign extends MagicSign
             return;
         }
 
+        if (mb_strlen($x) > 6 || mb_strlen($y) > 3 || mb_strlen($z) > 6) {
+            $player->sendMessage("エラーが発生しました");
+            return;
+        }
+
         if ($x !== "" && $y !== "" && $z !== "") {
             $pos = new Position(floatval($x), floatval($y), floatval($z), $pmWorld);
         } else {

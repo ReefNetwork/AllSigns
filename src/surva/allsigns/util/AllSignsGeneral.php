@@ -8,7 +8,7 @@ namespace surva\allsigns\util;
 class AllSignsGeneral
 {
 
-    public const SIGN_IDENTIFIER = "§eAll§5Signs§r";
+    public const SIGN_IDENTIFIER = "§eアクション看板§r";
 
     public const ID_SEPARATOR = "#";
 

@@ -81,14 +81,19 @@ class TeleportSignForm implements Form
             return;
         }
 
+        if (mb_strlen($data[0]) > 6 || mb_strlen($data[1]) > 3 || mb_strlen($data[2]) > 6) {
+            $player->sendMessage("桁が大きすぎます");
+            return;
+        }
+
         $signData = [
-          "world" => $player->getWorld()->getFolderName(),
-          "xc"    => $data[0],
-          "yc"    => $data[1],
-          "zc"    => $data[2],
+            "world" => $player->getWorld()->getFolderName(),
+            "xc" => $data[0],
+            "yc" => $data[1],
+            "zc" => $data[2],
         ];
 
-        $text       = $data[3];
+        $text = $data[3];
         $permission = "";
 
         if ($this->sign->createSign($signData, $text, $permission)) {
