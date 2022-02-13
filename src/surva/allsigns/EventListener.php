@@ -27,13 +27,13 @@ class EventListener implements Listener
     /**
      * Monitor when signs are changing their content to create new magic signs
      *
-     * @param  \pocketmine\event\block\SignChangeEvent  $ev
+     * @param \pocketmine\event\block\SignChangeEvent $ev
      */
     public function onSignChange(SignChangeEvent $ev): void
     {
-        $pl        = $ev->getPlayer();
+        $pl = $ev->getPlayer();
         $signBlock = $ev->getSign();
-        $newText   = $ev->getNewText();
+        $newText = $ev->getNewText();
 
         $firstLine = strtolower($newText->getLine(0));
 
@@ -54,12 +54,12 @@ class EventListener implements Listener
     /**
      * Check if a player interacts with a magic sign
      *
-     * @param  \pocketmine\event\player\PlayerInteractEvent  $ev
+     * @param \pocketmine\event\player\PlayerInteractEvent $ev
      */
     public function onPlayerInteract(PlayerInteractEvent $ev): void
     {
-        $pl    = $ev->getPlayer();
-        $item  = $ev->getItem();
+        $pl = $ev->getPlayer();
+        $item = $ev->getItem();
         $block = $ev->getBlock();
 
         if (!($block instanceof BaseSign)) {
@@ -73,11 +73,9 @@ class EventListener implements Listener
         $mode = $item->getId() === ItemIds::GOLD_PICKAXE ? AllSignsGeneral::EDIT_MODE : AllSignsGeneral::INTERACT_MODE;
 
         if ($mode === AllSignsGeneral::EDIT_MODE && !$pl->isCreative()) {
-            if (!$pl->hasPermission("allsigns.create")) {
-                $pl->sendMessage($this->allSigns->getMessage("form.nopermission"));
+            $pl->sendMessage($this->allSigns->getMessage("form.nopermission"));
 
-                return;
-            }
+            return;
         } elseif (!$pl->hasPermission("allsigns.use")) {
             $pl->sendMessage($this->allSigns->getMessage("form.nousepermission"));
 
@@ -90,11 +88,11 @@ class EventListener implements Listener
     /**
      * Check if a player breaks a magic sign
      *
-     * @param  \pocketmine\event\block\BlockBreakEvent  $ev
+     * @param \pocketmine\event\block\BlockBreakEvent $ev
      */
     public function onBlockBreak(BlockBreakEvent $ev): void
     {
-        $pl    = $ev->getPlayer();
+        $pl = $ev->getPlayer();
         $block = $ev->getBlock();
 
         if (!($block instanceof BaseSign)) {
