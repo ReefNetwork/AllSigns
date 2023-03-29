@@ -5,6 +5,8 @@ namespace surva\allsigns\form;
 use JetBrains\PhpStorm\ArrayShape;
 use pocketmine\form\Form;
 use pocketmine\player\Player;
+use pocketmine\scheduler\ClosureTask;
+use surva\allsigns\AllSigns;
 
 class CommandConfirmForm implements Form
 {
@@ -29,6 +31,15 @@ class CommandConfirmForm implements Form
         if ($data === null) return;
 
         if ($data) {
+            $xuid = $player->getXuid();
+            if (isset(AllSigns::$instance->coolTime[$xuid])) {
+                $player->sendMessage("再度コマンド看板を実行するには5秒待ってください");
+                return;
+            }
+            AllSigns::$instance->coolTime[$xuid] = $xuid;
+            AllSigns::$instance->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($xuid): void {
+                unset(AllSigns::$instance->coolTime[$xuid]);
+            }), 100);
             $player->getServer()->dispatchCommand($player, $this->command);
         }
     }

@@ -25,11 +25,17 @@ class AllSigns extends PluginBase
 
     private Config $messages;
 
+    static AllSigns $instance;
+
+    public array $coolTime = [];
+
     /**
      * Plugin has been enabled, initial setup
      */
     public function onEnable(): void
     {
+        self::$instance = $this;
+
         $this->saveDefaultConfig();
 
         $this->signStorage = new Config($this->getDataFolder() . "signs.yml");
@@ -41,8 +47,8 @@ class AllSigns extends PluginBase
         $this->signs = [];
 
         $this->defaultMessages = new Config($this->getFile() . "resources/languages/en.yml");
-        $this->messages        = new Config(
-          $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
+        $this->messages = new Config(
+            $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
         );
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
@@ -51,7 +57,7 @@ class AllSigns extends PluginBase
     /**
      * Get a MagicSign object using the associated block
      *
-     * @param  \pocketmine\block\BaseSign  $signBlock
+     * @param \pocketmine\block\BaseSign $signBlock
      *
      * @return \surva\allsigns\sign\MagicSign|null
      */
@@ -92,8 +98,8 @@ class AllSigns extends PluginBase
     /**
      * Get a sign from the sign object array or load from config
      *
-     * @param  int  $id
-     * @param  \pocketmine\block\BaseSign  $signBlock
+     * @param int $id
+     * @param \pocketmine\block\BaseSign $signBlock
      *
      * @return \surva\allsigns\sign\MagicSign|null
      */
@@ -127,7 +133,7 @@ class AllSigns extends PluginBase
     /**
      * Check if a sign is a magic sign
      *
-     * @param  \pocketmine\block\BaseSign  $signBlock
+     * @param \pocketmine\block\BaseSign $signBlock
      *
      * @return string|null
      */
@@ -136,8 +142,8 @@ class AllSigns extends PluginBase
         $firstLine = $signBlock->getText()->getLine(0);
 
         if (preg_match(
-              "/^" . AllSignsGeneral::SIGN_IDENTIFIER . AllSignsGeneral::ID_SEPARATOR . "[0-9]*/",
-              $firstLine
+                "/^" . AllSignsGeneral::SIGN_IDENTIFIER . AllSignsGeneral::ID_SEPARATOR . "[0-9]*/",
+                $firstLine
             ) !== 1
         ) {
             return null;
@@ -173,8 +179,8 @@ class AllSigns extends PluginBase
     /**
      * Get a translated message
      *
-     * @param  string  $key
-     * @param  array  $replaces
+     * @param string $key
+     * @param array $replaces
      *
      * @return string
      */
